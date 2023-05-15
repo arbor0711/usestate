@@ -1,24 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
 
 function App() {
+  const [quote, setQuote] = useState(null);
+
+  const eventHandler = (e) => setQuote(e.target.value);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+    <section>
+      <div>
+        <lable>Enter your question here.</lable>
+        <br></br>
+        <textarea onChange={eventHandler} type="text" />
+      </div>
+      {quote ? (
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          <b>You have asked: </b>
+          <em>{quote}</em>
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      ) : null}
+    </section>
   );
 }
 
