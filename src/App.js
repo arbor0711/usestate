@@ -9,7 +9,7 @@ function GoalForm(props) {
 
   function submitHandler(e) {
     e.preventDefault();
-    props.onAdd(formData); //SHOULD LEARN
+    props.onAdd(formData); //TODO: SHOULD LEARN
     setFormData({ goal: "", by: "" });
   }
 
@@ -51,8 +51,42 @@ function ListOfGoals(props) {
   );
 }
 
+function GiftCard(props) {
+  const giftCard = props.giftCard;
+  const spendGiftCard = props.spendGiftCard;
+  return (
+    <div>
+      <h1>Gift Card Page</h1>
+      <h2>
+        Customer: {giftCard.firstName} {giftCard.lastName}
+      </h2>
+      <h3>{giftCard.text}</h3>
+      <p>{giftCard.instructions}</p>
+      {giftCard.valid && (
+        <button onClick={spendGiftCard}>Spend Gift Card</button>
+      )}
+    </div>
+  );
+}
+
 export default function APP() {
   const [allGoals, setAllGoals] = useState([]);
+  const [giftCard, setGiftCard] = useState({
+    firstName: "Jennifer",
+    lastName: "Smith",
+    text: "Free dinner for 4 guests",
+    valid: true,
+    instructions: "To use your coupon, click the button below.",
+  });
+
+  function spendGiftCard() {
+    setGiftCard({
+      ...giftCard,
+      valid: false,
+      text: "Your coupon has been used.",
+      instructions: "Please visit our restaurant to renew your gift card.",
+    });
+  }
 
   function addGoal(goal) {
     setAllGoals([...allGoals, goal]);
@@ -62,6 +96,7 @@ export default function APP() {
     <div className="App">
       <GoalForm onAdd={addGoal} />
       <ListOfGoals allGoals={allGoals} />
+      <GiftCard giftCard={giftCard} spendGiftCard={spendGiftCard} />
     </div>
   );
 }
